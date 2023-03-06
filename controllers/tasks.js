@@ -9,7 +9,7 @@ const getTasks = async (request, response) => {
     }
   };
   
-  // get simple Task with req.params.id: id, name
+  // get simple Task with req.params.id: id
   const getTaskById = async (request, response) => {
     try {
       const id = parseInt(request.params.id);

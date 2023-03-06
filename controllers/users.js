@@ -53,7 +53,6 @@ const updateToken = async (req, res) => {
     // generate a new JWT token using the user ID from the request
     const token = jwt.sign({ userId: req.userId }, process.env.JWT_SECRET);
 
-    // send the response
     res.json({ token });
   } catch (error) {
     error;
@@ -70,7 +69,7 @@ const getUsers = async (request, response) => {
     }
   };
   
-  // get simple user with req.params.id: id, name
+  // get simple user with req.params.id: id
   const getUserById = async (request, response) => {
     try {
       const id = parseInt(request.params.id);
