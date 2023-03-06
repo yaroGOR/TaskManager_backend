@@ -4,9 +4,7 @@ const  sequelize  = require('./sequelize');
 const User = require('./users')
 const Task = require('./tasks')
  const Group = require('./groups')
- const { createUser, getTasksAndGroupsByUserId } = require('./queries');
-console.log('st')
-
+const logger = require('../logs/winston')
 
 Group.belongsToMany(User, { through: 'user_group' });
 Group.hasMany(Task, { foreignKey: 'group_id' });
@@ -24,6 +22,8 @@ const connectToDB = async () => {
     console.log('Connected to DB')
 
   } catch (error) {
+    logger.error(error.message);
+
     console.error('Unable to connect to the database:', error);
   }}
 

@@ -1,11 +1,13 @@
-const sequelize = require('../models/sequelize')
-const Group = require('../models/groups')
+const Group = require("../models/groups");
+const logger = require("../logs/winston");
 
 const getGroups = async () => {
   try {
     const groups = await Group.findAll();
     return groups;
   } catch (error) {
+    logger.error(error.message);
+
     throw error;
   }
 };
@@ -15,16 +17,20 @@ const getGroupById = async (id) => {
     const group = await Group.findByPk(id);
     return group;
   } catch (error) {
+    logger.error(error.message);
+
     throw error;
   }
 };
 
 const createGroup = async (name) => {
-  console.log('create Group service')
+  console.log("create Group service");
   try {
     const group = await Group.create({ name });
     return group;
   } catch (error) {
+    logger.error(error.message);
+
     throw error;
   }
 };
@@ -37,9 +43,11 @@ const updateGroup = async (name, id) => {
     }
     if (name !== undefined) {
       group.name = name;
-    }    
+    }
     await group.save();
   } catch (error) {
+    logger.error(error.message);
+
     throw error;
   }
 };
@@ -52,6 +60,8 @@ const deleteGroup = async (id) => {
     }
     await group.destroy();
   } catch (error) {
+    logger.error(error.message);
+
     throw error;
   }
 };

@@ -1,8 +1,7 @@
-const sequelize = require('../models/sequelize')
-const User = require('../models/users')
-const Task = require('../models/tasks')
-const Group = require('../models/groups')
-
+const User = require("../models/users");
+const Task = require("../models/tasks");
+const Group = require("../models/groups");
+const logger = require("../logs/winston");
 
 const getUsers = async () => {
   try {
@@ -28,9 +27,7 @@ const getUserByEmail = async (email) => {
   } catch (error) {
     throw error;
   }
-
-}
-
+};
 
 const getUserByUsername = async (username) => {
   try {
@@ -39,22 +36,21 @@ const getUserByUsername = async (username) => {
   } catch (error) {
     throw error;
   }
-
-}
+};
 
 const createUser = async (username, email, password) => {
   try {
     const user = await User.create({ username, email, password });
-    await user.save()
+    await user.save();
     return user;
   } catch (error) {
     throw error;
   }
 };
 
-const updateUser = async (username,email, password, id) => {
+const updateUser = async (username, email, password, id) => {
   try {
-    console.log(username, email, password)
+    console.log(username, email, password);
     const user = await User.findByPk(id);
     if (username !== undefined) {
       user.username = username;
@@ -67,7 +63,7 @@ const updateUser = async (username,email, password, id) => {
     if (password !== undefined) {
       user.password = password;
     }
-    console.log(user)
+    console.log(user);
     if (!user) {
       throw new Error(`User with id ${id} not found.`);
     }
@@ -92,11 +88,11 @@ const deleteUser = async (id) => {
 
 const getTasksAndGroupsByUserId = async (userId) => {
   try {
-    console.log('getTasks')
+    console.log("getTasks");
     const user = await User.findByPk(userId, {
       include: [{ model: Task }, { model: Group }],
     });
-    console.log(user.dataValues)
+    console.log(user.dataValues);
     return user.dataValues;
   } catch (error) {
     console.log(error);
@@ -112,5 +108,5 @@ module.exports = {
   deleteUser,
   getTasksAndGroupsByUserId,
   getUserByEmail,
-  getUserByUsername
+  getUserByUsername,
 };
